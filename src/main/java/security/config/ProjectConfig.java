@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ProjectConfig {
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();

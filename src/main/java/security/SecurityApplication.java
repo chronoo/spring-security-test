@@ -1,6 +1,6 @@
 package security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
@@ -15,10 +15,10 @@ public class SecurityApplication {
     }
 }
 
+@AllArgsConstructor
 @Component
-class Start{
-    @Autowired
-    private UserRepository repository;
+class StartupService {
+    private final UserRepository repository;
 
     @PostConstruct
     public void init() {
