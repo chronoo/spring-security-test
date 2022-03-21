@@ -3,15 +3,26 @@ package security.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-public class User implements UserDetails {
+@Entity
+public class SimpleUser implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(unique = true)
     private String username;
+
     private String password;
+
     private String authority;
 
-    public User(String username, String password, String authority) {
+    public SimpleUser() {}
+
+    public SimpleUser(String username, String password, String authority) {
         this.username = username;
         this.password = password;
         this.authority = authority;
@@ -64,5 +75,18 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return username + ":" + password;
     }
 }
