@@ -1,30 +1,23 @@
-package security;
+package security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import security.entity.User;
+
+import java.util.List;
 
 @Configuration
-public class UserManagementConfig {
+public class ProjectConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-
-        UserDetails user = User.withUsername("bill")
-            .password("12345")
-            .authorities("read", "write")
-            .accountExpired(false)
-            .disabled(true)
-            .build();
-
-        userDetailsService.createUser(user);
-        return userDetailsService;
+        UserDetails userDetails = new User("john", "12345", "read");
+        List<UserDetails> users = List.of(userDetails);
+        return new InMemoryUserDetailsService(users);
     }
 
     @Bean
