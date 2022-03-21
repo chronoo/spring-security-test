@@ -1,6 +1,6 @@
 package security.controller;
 
-import org.springframework.security.concurrent.DelegatingSecurityContextCallable;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutorService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,10 +21,12 @@ public class HelloController {
             return context.getAuthentication().getName();
         };
 
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        ExecutorService executorService = new DelegatingSecurityContextExecutorService(
+            Executors.newCachedThreadPool()
+        );
+
         try {
-            var contextTask = new DelegatingSecurityContextCallable<>(task);
-            return "Hi, " + executorService.submit(contextTask).get() + "!";
+            return "Hi, " + executorService.submit(task).get() + "!";
         } finally {
             executorService.shutdown();
         }
