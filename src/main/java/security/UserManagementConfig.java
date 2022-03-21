@@ -16,9 +16,11 @@ public class UserManagementConfig {
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
 
-        UserDetails user = User.withUsername("john")
+        UserDetails user = User.withUsername("bill")
             .password("12345")
-            .authorities("read")
+            .authorities("read", "write")
+            .accountExpired(false)
+            .disabled(true)
             .build();
 
         userDetailsService.createUser(user);
