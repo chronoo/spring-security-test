@@ -19,10 +19,9 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic(configurer -> {
-            configurer.realmName("CUSTOM");
-            configurer.authenticationEntryPoint(new CustomEntryPoint());
-        });
+        http.formLogin()
+                .defaultSuccessUrl("/home", true);
+
         http.authorizeRequests()
                 .anyRequest()
                 .authenticated();
