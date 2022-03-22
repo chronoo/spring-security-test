@@ -9,3 +9,7 @@ create table simple_user (
 );
 alter table simple_user add constraint SIMPLE_USER_USERNAME unique (username);
 
+--changeset alex:create_user
+insert into simple_user (id, username, password, authority)
+values (default, 'alex', '123', 'read');
+--rollback delete simple_user where username = 'alex';
