@@ -6,11 +6,15 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @AllArgsConstructor
 public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -20,7 +24,10 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .defaultSuccessUrl("/home", true);
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
+                .and()
+                .httpBasic();
 
         http.authorizeRequests()
                 .anyRequest()
