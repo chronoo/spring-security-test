@@ -1,4 +1,4 @@
-package security.entity;
+package security.db.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

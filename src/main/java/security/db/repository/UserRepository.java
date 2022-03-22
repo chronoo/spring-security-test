@@ -1,7 +1,7 @@
-package security.repository;
+package security.db.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import security.entity.SimpleUser;
+import security.db.entity.SimpleUser;
 
 import java.util.Optional;
 
