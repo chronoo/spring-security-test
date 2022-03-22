@@ -3,11 +3,9 @@ package security.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor
@@ -22,9 +20,12 @@ public class SimpleUser implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    @Enumerated(EnumType.STRING)
+    private EncryptionAlgorithm algorithm;
     private String password;
 
-    private String authority;
+    @OneToMany(mappedBy = "simpleUser", fetch = FetchType.EAGER)
+    private List<Authority> authorities;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -44,11 +45,6 @@ public class SimpleUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> authority);
     }
 
     @Override
