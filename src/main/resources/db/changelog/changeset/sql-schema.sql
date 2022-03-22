@@ -19,7 +19,10 @@ create table authority (
 --changeset alex:create_user
 insert into simple_user (id, username, password, algorithm)
 values (1, 'alex', '$2a$04$DwweMgIeOKmZGIAGG6QEuOopTgiWwlEam9.0386Ta42Ig6HdJIM4S', 'BCRYPT');
+insert into simple_user (id, username, password, algorithm)
+values (2, 'john', '$2a$04$DwweMgIeOKmZGIAGG6QEuOopTgiWwlEam9.0386Ta42Ig6HdJIM4S', 'BCRYPT');
 
 --changeset alex:create_authorities
 insert into authority (id, authority, simple_user) values (1, 'READ', 1);
 insert into authority (id, authority, simple_user) values (2, 'WRITE', 1);
+insert into authority (id, authority, simple_user) values (3, 'UPDATE', 2);
